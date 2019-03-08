@@ -10,7 +10,12 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: 'UNIT_MULTIPLIER',
+      useValue: 1
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
