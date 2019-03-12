@@ -3,12 +3,12 @@ import {Inject, Injectable} from '@angular/core';
 import {Time} from '@angular/common';
 
 export class TimeService implements ITimeService {
-  constructor(@Inject('UNIT_MULTIPLIER') public multiplier: number) {
-    console.log(multiplier);
+  public multiplier = 1;
+  constructor() {
   }
 
   GetCoefficient(delta: number): number {
-    return this.multiplier * (1 / 10 * delta);
+    return this.multiplier * (144 / 1000 * delta);
   }
 
   GetTimestamp(): number {
@@ -23,7 +23,7 @@ export class TimeService implements ITimeService {
   useClass: TimeService
 })
 export abstract class ITimeService {
-  constructor(@Inject('UNIT_MULTIPLIER') public multiplier: number) {
+  constructor() {
   }
 
   abstract GetCoefficient(delta: number): number;

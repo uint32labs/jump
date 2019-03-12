@@ -6,7 +6,9 @@ export class InputService implements IInputService {
   private keys: string[] = [];
   private keyMap = new KeyMap();
 
-  GetLastInput(device: number): Input {
+
+
+  GetInput(device: number): Input {
     if (device === -1) {
       return this.GetKeyboardInput();
     }
@@ -69,7 +71,7 @@ export class InputService implements IInputService {
   useClass: InputService
 })
 export abstract class IInputService {
-  abstract GetLastInput(device: number): Input;
+  abstract GetInput(device: number): Input;
 
   abstract KeyDownCallback(event: KeyboardEvent): void ;
 
