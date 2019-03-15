@@ -10,7 +10,7 @@ export class AiService implements IAiService {
   actions: Vector[] = [];
   currentAction: Vector = new Vector(0, 0);
 
-  CalculateInput(map: Object[], player: Player): Input {
+  CalculateInput(map: Object[], player: Player, delta: number): Input {
     if (this.actions.length === 0) {
       this.currentAction = new Vector(0, 0);
       const trajectory = player.velocity * GlobalSettings.jumpingTime;
@@ -23,8 +23,8 @@ export class AiService implements IAiService {
       this.actions.push(new Vector(-extra.x, -extra.y));
     }
     const axes = [1 / this.actions[0].norm() * this.actions[0].x, 1 / this.actions[0].norm() * this.actions[0].y, 0, 0];
-    this.currentAction.x += axes[0];
-    this.currentAction.y += axes[1];
+    this.currentAction.x += axes[0] * delta * player.velocity;
+    this.currentAction.y += axes[1] * delta * player.velocity;
     const input = new Input();
     input.axes = axes;
     input.buttons = [];
@@ -58,7 +58,7 @@ export class AiService implements IAiService {
   useClass: AiService
 })
 export abstract class IAiService {
-  abstract CalculateInput(map: Object[], player: Player): Input;
+  abstract CalculateInput(map: Object[], player: Player, delta: number): Input;
 
 }
 

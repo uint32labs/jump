@@ -25,7 +25,7 @@ export class MainService {
   private lastTime: number;
 
   constructor(public drawingService: IDrawingService, public inputService: IInputService, public timeService: ITimeService, public mapService: IMapService, public physicsService: IPhysicsService, public aiService: IAiService) {
-    const player = new Player(0, new Rectangle(20, 20), new Point(100, 0, 200));
+    const player = new Player(-1, new Rectangle(20, 20), new Point(100, 0, 200));
     player.color = '#f05050';
     player.verticalVelocity = GlobalSettings.jumpSpeed;
     player.velocity = GlobalSettings.initialVelocity;
@@ -37,9 +37,9 @@ export class MainService {
     testMap.push(new Plate(new Point(400, 0, 400)));
     testMap[0].size = new Rectangle(100, 100);
     testMap[1].size = new Rectangle(100, 100);
-    //this.mapService.LoadMap(testMap);
-    //this.mapService.LoadMap(MapGenerator.GenerateGrid(new Rectangle(100, 100), new Rectangle(100000, 100000), new Point(-2500, 0, -2500), new Rectangle(150, 150)));
-    //mapService.LoadMap(MapGenerator.GenerateRandom(500, new Point(-2500, 0, -2500), new Rectangle(5000, 5000)));
+    // this.mapService.LoadMap(testMap);
+    // this.mapService.LoadMap(MapGenerator.GenerateGrid(new Rectangle(100, 100), new Rectangle(100000, 100000), new Point(-2500, 0, -2500), new Rectangle(150, 150)));
+    // mapService.LoadMap(MapGenerator.GenerateRandom(500, new Point(-2500, 0, -2500), new Rectangle(5000, 5000)));
     this.mapService.LoadMap(MapGenerator.GenerateRandomGrid(new Rectangle(100, 100), new Point(-10000, 0, -10000), new Rectangle(210, 210), new Rectangle(190, 190), 350, 320));
     this.drawingService.context = this.context;
     setInterval(this.FPS(), 1000);
@@ -67,7 +67,7 @@ export class MainService {
       const player = this.players[i];
       let input: Input;
       if (player.device === -2) {
-        input = this.aiService.CalculateInput(this.mapService.map, player);
+        input = this.aiService.CalculateInput(this.mapService.map, player, delta);
       } else {
         input = this.inputService.GetInput(player.device);
       }
